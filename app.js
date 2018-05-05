@@ -30,8 +30,8 @@ app.use(koaRouter.routes());
 app.use(historyApiFallback);
 app.use(server(path.resolve('dist')));
 
-app.listen(8889, () => {
-    console.log('Koa is listening in 8889');
+app.listen(80, () => {
+    console.log('Koa is listening in 80');
 });
 
 module.exports = app;

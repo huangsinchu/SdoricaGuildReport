@@ -1,33 +1,14 @@
-const Axios = require('axios');
 const _ = require('lodash');
-const dbConnector = require('./dbconnector.js');
+const db = require('monk')('localhost/sdoricaguildreport')
+
+const sdorica = require('./sdorica.js');
 
 const fetchGuildMembersInfo = async (ctx, next) => {
-    let accessToken = ctx.request.body.accessToken;
-    let axiosInstance = Axios.create({
-        baseURL: 'https://exp.sdorica.dragonest.com/',
-        timeout: 1000,
-        headers: {
-            'Accept-Encoding': 'gzip',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Access-Token': accessToken,
-            'Game-Data-Revision': 96,
-            'Connection': 'Keep-Alive, TE',
-            'TE': 'identity',
-            'User-Agent': 'BestHTTP'
-        }
-    });
-    let guildInfo = await axiosInstance.post('guild/status', {
-        locale: 'zh_CN'
-    });
-    let guildId = guildInfo.data.data.guildId;
-    let guildMembersInfo = await axiosInstance.post('guild/members', {
-        guildId: guildId
-    });
-    let recordDate = new Date();
-    recordDate.setHours(recordDate.getHours() -5);
-    let dateTime = recordDate.getTime();
-    let memberRecords = _.map(guildMembersInfo.data.data, (user) => {
+    let sdoricaGetter = sdorica.init(ctx.request.body.accessToken)
+    let guildInfo = await sdoricaGetter.getUserGuildInfo();
+    let guildMembersInfo = await sdoricaGetter.getGuildMembersInfo();
+    let dateTime = (new Date()).getTime();
+    let memberRecords = _.map(guildMembersInfo, (user) => {
         return {
             sid: user.oid,
             guildId: user.guild.guildId,
@@ -38,14 +19,15 @@ const fetchGuildMembersInfo = async (ctx, next) => {
             recordTime: dateTime
         }
     });
-    dbConnector.insert('fetchRecord', {
+    await db.get('fetchRecord').insert({
         recordTime: dateTime,
-        guildId: guildId,
-        coin: guildInfo.data.data.coin,
-        ring: guildInfo.data.data.ring
-    }, (result) => {});
-    dbConnector.insert('memberRecord', memberRecords, (result) => {});
-    ctx.response.body = memberRecords;
+        guildId: guildInfo.guildId,
+        guildName: guildInfo.name,
+        coin: guildInfo.coin,
+        ring: guildInfo.ring
+    });
+    let res = await db.get('memberRecord').insert(memberRecords);
+    ctx.response.body = res;
     await next();
 }
 
