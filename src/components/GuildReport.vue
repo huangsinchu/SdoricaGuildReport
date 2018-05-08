@@ -1,9 +1,9 @@
 <template>
-  <el-table v-loading.fullscreen.lock='loading' :data='tableData' style='width: 100%' :height="height">
-    <el-table-column fixed prop='name' label='名字' width='150'>
+  <el-table v-loading.fullscreen.lock='loading' :data='tableData' style='width: 100%' height="100%" size='small'>
+    <el-table-column fixed prop='name' label='名字' width='120'>
     </el-table-column>
     <el-table-column :label='"<" + guildName + "> 魂晶碎片捐赠记录"'>
-      <el-table-column v-for='date in recordDate' :key='date.value' :prop='date.value' :label='date.display' width='120'>
+      <el-table-column v-for='date in recordDate' :key='date.value' :prop='date.value' :label='date.display' width='100'>
       </el-table-column>
     </el-table-column>
   </el-table>
@@ -15,7 +15,6 @@ export default {
   data () {
     return {
       loading: true,
-      height: 800,
       guildName: '工会',
       recordDate: [],
       tableData: []

@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <img src="./assets/sdorica.png">
-    <router-view/>
+    <img style="margin: 5px" src="./assets/sdorica.png">
+    <div style="height: calc(100vh - 130px)">
+      <router-view/>
+    </div>
   </div>
 </template>
 
@@ -18,5 +20,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  line-height: 0;
 }
 </style>
