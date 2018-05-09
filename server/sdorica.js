@@ -8,7 +8,7 @@ const initAxiosInstance = (accessToken) => {
             'Accept-Encoding': 'gzip',
             'Content-Type': 'application/x-www-form-urlencoded',
             'Access-Token': accessToken,
-            'Game-Data-Revision': 96,
+            'Game-Data-Revision': 99,
             'Connection': 'Keep-Alive, TE',
             'TE': 'identity',
             'User-Agent': 'BestHTTP'
