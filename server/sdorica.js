@@ -1,6 +1,6 @@
 const Axios = require('axios');
 
-const initAxiosInstance = (accessToken) => {
+const initAxiosInstance = (accessToken, dataVersion) => {
     var axiosInstance = Axios.create({
         baseURL: 'https://exp.sdorica.dragonest.com/',
         timeout: 1000,
@@ -8,7 +8,7 @@ const initAxiosInstance = (accessToken) => {
             'Accept-Encoding': 'gzip',
             'Content-Type': 'application/x-www-form-urlencoded',
             'Access-Token': accessToken,
-            'Game-Data-Revision': 99,
+            'Game-Data-Revision': Number(dataVersion),
             'Connection': 'Keep-Alive, TE',
             'TE': 'identity',
             'User-Agent': 'BestHTTP'
