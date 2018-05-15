@@ -23,7 +23,7 @@ let getGuildDonateReport = async (ctx, next) => {
 
     let recordTimeList = [];
     _.each(fetchRecords, (fetchRecord) => {
-        if (recordTimeList.length >= 10) return;
+        if (recordTimeList.length >= 30) return;
         let timeDisplay = fomartDateTime(fetchRecord.recordTime);
         if (recordTimeList.length === 0 || recordTimeList[recordTimeList.length - 1].display !== timeDisplay) {
             recordTimeList.push({
