@@ -7,6 +7,34 @@ let fomartDateTime = (dateTime) => {
     return String(date.getMonth() + 1) + '/' + date.getDate()
 }
 
+const getPrestigeLevelFromValue = (prestige) => {
+    if (prestige < 200) {
+        return 1;
+    } else if (prestige < 500) {
+        return 2;
+    } else if (prestige < 1000) {
+        return 3;
+    } else if (prestige < 2000) {
+        return 4;
+    } else if (prestige < 4000) {
+        return 5;
+    } else if (prestige < 7000) {
+        return 6;
+    } else if (prestige < 15000) {
+        return 7;
+    } else if (prestige < 30000) {
+        return 8;
+    } else if (prestige < 60000) {
+        return 9;
+    } else if (prestige < 150000) {
+        return 10;
+    } else if (prestige < 350000) {
+        return 11;
+    } else {
+        return 12;
+    }
+}
+
 let getGuildDonateReport = async (ctx, next) => {
     let guildId = ctx.query.guildId;
     let fetchRecords = await db.get('fetchRecord').find({
@@ -50,6 +78,7 @@ let getGuildDonateReport = async (ctx, next) => {
                 name: memberRecord.name,
                 donateCoin: [memberRecord.donateCoin],
                 donateRing: [memberRecord.donateRing],
+                prestigeLv: getPrestigeLevelFromValue(memberRecord.prestige),
                 end: false
             }
         })

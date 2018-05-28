@@ -1,11 +1,12 @@
 <template>
   <div>
+    <img style="padding: 5px;" src="../assets/sdorica.png">
     <el-form ref="form" :model="form" label-width="135px">
       <el-form-item label="AccessToken">
         <el-input v-model="form.accessToken"></el-input>
       </el-form-item>
       <el-form-item label="GameDataVersion">
-        <el-input-number v-model="form.dataVersion" :min="1">
+        <el-input-number v-model="form.dataVersion" :min="1"></el-input-number>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">提交</el-button>

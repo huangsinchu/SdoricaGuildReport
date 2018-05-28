@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <img style="margin: 5px" src="./assets/sdorica.png">
-    <div style="height: calc(100vh - 130px)">
+    <!-- <img style="margin: 5px" src="./assets/sdorica.png"> -->
+    <div style="height: 100vh">
       <router-view/>
     </div>
   </div>
