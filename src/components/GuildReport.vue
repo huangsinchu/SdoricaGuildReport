@@ -14,7 +14,7 @@
           <template slot-scope="scope">{{ scope.row.name + '(Lv' + scope.row.prestigeLv + ')' }}</template>
         </el-table-column>
         <el-table-column :label='"<" + guildName + "> 魂晶碎片捐赠记录"'>
-          <el-table-column v-for='colHeader in colHeaders' :key='colHeader.value' :prop='colHeader.value' :label='colHeader.display' width='100'>
+          <el-table-column v-for='colHeader in colHeaders' :key='colHeader.value' :prop='colHeader.value' :label='colHeader.display' sortable width='100'>
           </el-table-column>
         </el-table-column>
       </el-table>
