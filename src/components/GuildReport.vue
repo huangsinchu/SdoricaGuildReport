@@ -38,7 +38,7 @@ export default {
     summaryHeader () {
       return {
         value: 'last' + this.count,
-        display: '最近' + this.count + '次总计'
+        display: this.count + '次总计'
       }
     },
     colHeaders () {
