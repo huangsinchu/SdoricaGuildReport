@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const db = require('monk')('localhost/sdoricaguildreport');
+const baseUrlCollection = db.get('baseUrl');
 const dataVersionCollection = db.get('dataVersion');
 const fetchRecordCollection = db.get('fetchRecord');
 const memberRecordCollection = db.get('memberRecord');
@@ -7,8 +8,12 @@ const memberRecordCollection = db.get('memberRecord');
 const sdorica = require('./sdorica.js');
 
 const fetchGuildMembersInfo = async (ctx, next) => {
-    let accessToken = ctx.request.body.accessToken, dataVersion = ctx.request.body.dataVersion;
-    let sdoricaGetter = sdorica.init(accessToken, dataVersion);
+    let accessToken = ctx.request.body.accessToken,
+        baseUrl = ctx.request.body.baseUrl,
+        dataVersion = ctx.request.body.dataVersion;
+    let sdoricaGetter = sdorica.init(baseUrl, accessToken, dataVersion);
+    await baseUrlCollection.remove({});
+    await baseUrlCollection.insert({url: baseUrl});
     await dataVersionCollection.remove({});
     await dataVersionCollection.insert({version: dataVersion});
     let guildInfo = await sdoricaGetter.getUserGuildInfo();
@@ -37,13 +42,17 @@ const fetchGuildMembersInfo = async (ctx, next) => {
     await next();
 }
 
-const getLastDataVersion = async (ctx, next) => {
+const getGameRequestInfo = async (ctx, next) => {
+    let baseUrl = await baseUrlCollection.findOne({});
     let dataVersion = await dataVersionCollection.findOne({});
-    ctx.response.body = dataVersion && dataVersion.version || '';
+    ctx.response.body = {
+        baseUrl: baseUrl && baseUrl.version || '',
+        dataVersion: dataVersion && dataVersion.version || ''
+    }
     await next();
 }
 
 module.exports = (router) => {
     router.post('/record-guild-members-info', fetchGuildMembersInfo);
-    router.get('/get-last-data-version', getLastDataVersion);
+    router.get('/get-game-request-info', getGameRequestInfo);
 }

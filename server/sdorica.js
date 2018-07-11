@@ -1,8 +1,8 @@
 const Axios = require('axios');
 
-const initAxiosInstance = (accessToken, dataVersion) => {
+const initAxiosInstance = (baseUrl, accessToken, dataVersion) => {
     var axiosInstance = Axios.create({
-        baseURL: 'https://exp116.sdorica.dragonest.com/',
+        baseURL: baseUrl,
         timeout: 1000,
         headers: {
             'Accept-Encoding': 'gzip',

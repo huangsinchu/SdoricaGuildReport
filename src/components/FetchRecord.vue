@@ -5,6 +5,9 @@
       <el-form-item label="AccessToken">
         <el-input v-model="form.accessToken"></el-input>
       </el-form-item>
+      <el-form-item label="BaseUrl">
+        <el-input v-model="form.baseUrl"></el-input>
+      </el-form-item>
       <el-form-item label="GameDataVersion">
         <el-input-number v-model="form.dataVersion" :min="1"></el-input-number>
       </el-form-item>
@@ -31,14 +34,16 @@ export default {
     return {
       form: {
         accessToken: '',
+        baseUrl: '',
         dataVersion: ''
       },
       result: ''
     }
   },
   created () {
-    this.$http.get('/api/get-last-data-version').then(res => {
-      this.form.dataVersion = res.data
+    this.$http.get('/api/get-game-request-info').then(res => {
+      this.form.baseUrl = res.data.baseUrl;
+      this.form.dataVersion = res.data.dataVersion;
     })
   },
   methods: {
