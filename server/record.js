@@ -46,7 +46,7 @@ const getGameRequestInfo = async (ctx, next) => {
     let baseUrl = await baseUrlCollection.findOne({});
     let dataVersion = await dataVersionCollection.findOne({});
     ctx.response.body = {
-        baseUrl: baseUrl && baseUrl.version || '',
+        baseUrl: baseUrl && baseUrl.urll || '',
         dataVersion: dataVersion && dataVersion.version || ''
     }
     await next();
