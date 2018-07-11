@@ -42,8 +42,8 @@ export default {
   },
   created () {
     this.$http.get('/api/get-game-request-info').then(res => {
-      this.form.baseUrl = res.data.baseUrl;
-      this.form.dataVersion = res.data.dataVersion;
+      this.form.baseUrl = res.data.baseUrl
+      this.form.dataVersion = res.data.dataVersion
     })
   },
   methods: {
