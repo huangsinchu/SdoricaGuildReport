@@ -22,7 +22,7 @@
     "koa-router": "^7.4.0",
     "koa-session2": "^2.2.6",
     "koa-static": "^4.0.2",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.21",
     "mongodb": "^3.0.7",
     "monk": "^6.0.5",
     "vue": "^2.5.2",
